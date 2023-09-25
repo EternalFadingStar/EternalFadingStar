@@ -1,5 +1,3 @@
-// components/Card.js
-
 import { useState, useRef } from 'react';
 
 function Card() {
@@ -8,9 +6,14 @@ function Card() {
     const [permutations, setPermutations] = useState([]);
 
     const handleInputChange = (e) => {
+        const newDigit = e.target.value.slice(-1); // Get the last digit
+        // If the digit is already in the set and the new value's length is not less than the current value, return
+        if (inputValue.includes(newDigit) && e.target.value.length >= inputValue.length) return;
+    
         setInputValue(e.target.value);
         setPermutations(getPermutations(e.target.value));
     };
+    
 
     const handleCardClick = () => {
         inputRef.current.focus(); // Focus the input when the card is clicked
@@ -19,10 +22,12 @@ function Card() {
     const getPermutations = (string) => {
         if (string.length === 0) return [];
     
+        const sortedString = [...string].sort().join(''); // Sort the string in ascending order
+    
         const generateCombinations = (prefix, chars, result) => {
             if (prefix.length === 4) {
-                // Check if every digit from the input string appears at least once in the prefix
-                if ([...string].every(digit => prefix.includes(digit))) {
+                // Check if every digit from the sortedString appears at least once in the prefix
+                if ([...sortedString].every(digit => prefix.includes(digit))) {
                     result.add(prefix);
                 }
                 return;
@@ -33,7 +38,7 @@ function Card() {
         };
     
         const result = new Set();
-        generateCombinations('', string, result);
+        generateCombinations('', sortedString, result);
     
         return [...result];
     };
@@ -45,7 +50,6 @@ function Card() {
 
     return (
         <div className="card" onClick={handleCardClick}>
-            <span className="close-btn" onClick={() => setInputValue('')}>X</span>
             
             <div className="input-container" data-digit-count={inputValue.length}>
                 {[...Array(4)].map((_, index) => (
@@ -77,4 +81,3 @@ function Card() {
 }
 
 export default Card;
-
