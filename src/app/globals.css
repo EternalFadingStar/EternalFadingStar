@@ -25,3 +25,97 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.card {
+  width: 200px;
+  height: 420px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  vertical-align: top;
+  background-color: #fff;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center; /* Ensure the digits are centered */
+  align-items: center;
+  position: relative;
+  width: 100%; /* Take up the full width of the card */
+  overflow: hidden; /* Hide the extra digit boxes */
+}
+
+.digit-box {
+  width: 0; /* Set default width to 0 */
+  height: 60px;
+  border-bottom: 2px solid #ccc;
+  margin: 0 5px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 60px;
+  transition: width 0.3s ease; /* Transition the width */
+  background: transparent;
+  overflow: hidden; /* Hide the content when width is 0 */
+}
+
+/* Adjust the width of the underlines based on the number of digits entered */
+.input-container[data-digit-count="1"] .digit-box:nth-child(1),
+.input-container[data-digit-count="2"] .digit-box:nth-child(1),
+.input-container[data-digit-count="2"] .digit-box:nth-child(2),
+.input-container[data-digit-count="3"] .digit-box:nth-child(1),
+.input-container[data-digit-count="3"] .digit-box:nth-child(2),
+.input-container[data-digit-count="3"] .digit-box:nth-child(3),
+.input-container[data-digit-count="4"] .digit-box {
+  width: 50px; /* Set the width to 50px when visible */
+}
+
+.card-input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+  height: 1px;
+  width: 1px;
+}
+
+.permutations-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.permutation {
+  flex-basis: 25%;
+  text-align: center;
+  padding: 5px 0;
+  position: relative; /* Add this line to position the pseudo-element relative to this element */
+  box-sizing: border-box;
+}
+
+.permutation::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%; /* Center the underline */
+  width: 80%; /* Adjust this value to control the width of the underline */
+  transform: translateX(-50%); /* Ensure the underline remains centered */
+  border-bottom: 2px solid #ccc;
+}
