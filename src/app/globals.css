@@ -120,3 +120,11 @@ body {
   border-bottom: 2px solid #ccc;
 }
 
+.permutation.red {
+  color: red;
+}
+
+.permutation.green {
+  color: greenyellow;
+}
+

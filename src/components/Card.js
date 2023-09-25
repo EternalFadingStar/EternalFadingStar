@@ -2,8 +2,9 @@ import { useState, useRef } from 'react';
 
 function Card() {
     const [inputValue, setInputValue] = useState('');
-    const inputRef = useRef(null); // Create a ref
+    const inputRef = useRef(null);
     const [permutations, setPermutations] = useState([]);
+    const [highlightStatus, setHighlightStatus] = useState({});
 
     const handleInputChange = (e) => {
         const newDigit = e.target.value.slice(-1); // Get the last digit
@@ -14,7 +15,6 @@ function Card() {
         setPermutations(getPermutations(e.target.value));
     };
     
-
     const handleCardClick = () => {
         inputRef.current.focus(); // Focus the input when the card is clicked
     };
@@ -42,8 +42,26 @@ function Card() {
     
         return [...result];
     };
-    
 
+    const handlePermutationClick = (perm, event) => {
+        event.stopPropagation(); // Stop the event from bubbling up
+    
+        let newStatus = {};
+    
+        if (event.type === "click" && event.ctrlKey) { // Ctrl + Left click
+            newStatus = highlightStatus[perm] === "green" ? "default" : "green";
+        } else if (event.type === "click") { // Just Left click
+            newStatus = highlightStatus[perm] === "red" ? "default" : "red";
+        } else if (event.type === "auxclick") { // Middle click
+            setHighlightStatus({}); // Reset all highlights
+            return;
+        }
+    
+        setHighlightStatus(prev => ({ ...prev, [perm]: newStatus }));
+    };
+    
+        
+    
     const copyToClipboard = () => {
         navigator.clipboard.writeText(permutations.join('\n'));
     };
@@ -71,9 +89,16 @@ function Card() {
     
             <div className="permutations-container">
                 {permutations.map((perm, index) => (
-                    <div key={index} className="permutation">
-                        {perm}
-                    </div>
+                    <div
+                    key={index}
+                    className={`permutation ${highlightStatus[perm] || ''}`}
+                    onClick={(e) => handlePermutationClick(perm, e)}
+                    onContextMenu={(e) => handlePermutationClick(perm, e)}
+                    onAuxClick={(e) => handlePermutationClick(perm, e)}
+                >
+                    {perm}
+                </div>
+                
                 ))}
             </div>
         </div>
