@@ -7,13 +7,17 @@ function Card() {
     const [highlightStatus, setHighlightStatus] = useState({});
 
     const handleInputChange = (e) => {
-        const newDigit = e.target.value.slice(-1); // Get the last digit
-        // If the digit is already in the set and the new value's length is not less than the current value, return
-        if (inputValue.includes(newDigit) && e.target.value.length >= inputValue.length) return;
+        const value = e.target.value;
+        if (!/^\d*$/.test(value)) return; // If the value is not a number, return
     
-        setInputValue(e.target.value);
-        setPermutations(getPermutations(e.target.value));
+        const newDigit = value.slice(-1); // Get the last digit
+        // If the digit is already in the set and the new value's length is not less than the current value, return
+        if (inputValue.includes(newDigit) && value.length >= inputValue.length) return;
+    
+        setInputValue(value);
+        setPermutations(getPermutations(value));
     };
+    
     
     const handleCardClick = () => {
         inputRef.current.focus(); // Focus the input when the card is clicked
@@ -84,7 +88,7 @@ function Card() {
                 maxLength={4}
                 value={inputValue}
                 onChange={handleInputChange}
-                placeholder="Enter up to 4 digits"
+                pattern="\d*"
             />
     
             <div className="permutations-container">

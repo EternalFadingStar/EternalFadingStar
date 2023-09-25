@@ -128,3 +128,15 @@ body {
   color: greenyellow;
 }
 
+.add-card {
+  opacity: 0.5; /* Make the card semi-transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* Change the cursor to a pointer when hovering over the card */
+}
+
+.plus-sign {
+  font-size: 48px;
+  color: #333;
+}

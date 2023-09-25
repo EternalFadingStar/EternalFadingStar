@@ -2,6 +2,7 @@
 'use client'
 import { useState } from 'react';
 import Card from '../components/Card';
+import AddCard from '../components/AddCard'; // Import the AddCard component
 
 export default function Home() {
   const [cards, setCards] = useState([<Card key={0} />]);
@@ -12,12 +13,11 @@ export default function Home() {
 
   return (
     <div className="container">
-      <button onClick={addCard}>Add Card</button>
       {cards}
+      <AddCard onAdd={addCard} /> {/* Add the AddCard component */}
     </div>
   );
 }
-
 
 export const config = {
   useClient: true
