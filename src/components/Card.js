@@ -21,6 +21,15 @@ function Card() {
     
     const handleCardClick = () => {
         inputRef.current.focus(); // Focus the input when the card is clicked
+
+        if (event.ctrlKey && event.type === "click") { // Ctrl + Left click
+            copyToClipboard();
+        } else if (event.ctrlKey && event.type === "auxclick") { // Ctrl + Middle click
+            // Logic to delete the card
+            // This will require some changes in the parent component to actually remove the card
+            // For now, I'll just log a message
+            console.log("Delete card");
+        }
     };
 
     const getPermutations = (string) => {
@@ -52,7 +61,7 @@ function Card() {
     
         let newStatus = {};
     
-        if (event.type === "click" && event.ctrlKey) { // Ctrl + Left click
+        if (event.type === "click" && event.altKey) { // Ctrl + Left click
             newStatus = highlightStatus[perm] === "green" ? "default" : "green";
         } else if (event.type === "click") { // Just Left click
             newStatus = highlightStatus[perm] === "red" ? "default" : "red";
@@ -71,7 +80,7 @@ function Card() {
     };
 
     return (
-        <div className="card" onClick={handleCardClick}>
+        <div className="card" onClick={handleCardClick} onAuxClick={handleCardClick}>
             
             <div className="input-container" data-digit-count={inputValue.length}>
                 {[...Array(4)].map((_, index) => (
