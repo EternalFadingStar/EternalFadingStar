@@ -1,12 +1,18 @@
+'use client'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'Number Permutations',
-  description: 'Generate permutations for 4-digit long combinations using provided numbers.',
+
+function DarkModeHandler() {
+  useEffect(() => {
+    document.body.classList.add('dark-mode');
+  }, []);
+
+  return null;
 }
 
 export default function RootLayout({
@@ -16,6 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <DarkModeHandler />
       <body className={inter.className}>{children}</body>
     </html>
   )
