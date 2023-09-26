@@ -36,13 +36,13 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
   display: inline-block;
   vertical-align: top;
-  background-color: #2e2e2e; /* Slightly lighter gray */
+  background-color: #2b2d31; /* Slightly lighter gray */
   position: relative;
   transition: background-color 0.3s;
 }
 
 .card:hover {
-  background-color: #3c4043; /* Gray */
+  background-color: #2e3035; /* Gray */
 }
 
 .close-btn {
