@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Card from '../components/Card';
 import AddCard from '../components/AddCard'; // Import the AddCard component
+import React from 'react';
 
 export default function Home() {
   const [cards, setCards] = useState([<Card key={0} onDelete={() => deleteCard(0)} />]); // Pass the deleteCard callback

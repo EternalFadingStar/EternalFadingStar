@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  --foreground-rgb: 49, 51, 56;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 232, 234, 237; /* Off-white */
+    --background-start-rgb: 32, 33, 36; /* Dark gray */
+    --background-end-rgb: 32, 33, 36; /* Dark gray */
   }
 }
 
@@ -29,15 +29,20 @@ body {
 .card {
   width: 200px;
   height: 420px;
-  border: 1px solid #ccc;
+  border: 1px solid #5f6368; /* Darker gray */
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
   display: inline-block;
   vertical-align: top;
-  background-color: #fff;
+  background-color: #2e2e2e; /* Slightly lighter gray */
   position: relative;
+  transition: background-color 0.3s;
+}
+
+.card:hover {
+  background-color: #3c4043; /* Gray */
 }
 
 .close-btn {
@@ -53,11 +58,13 @@ body {
   max-width: 100%;
   padding: 20px;
   box-sizing: border-box;
+  background-color: transparent; /* Ensure the container has a transparent background */
 }
+
 
 .input-container {
   display: flex;
-  justify-content: center; /* Ensure the digits are centered */
+  justify-content: center;
   align-items: center;
   position: relative;
   width: 100%; /* Take up the full width of the card */
@@ -67,7 +74,7 @@ body {
 .digit-box {
   width: 0; /* Set default width to 0 */
   height: 60px;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #5f6368; /* Darker gray */
   margin: 0 5px;
   font-size: 24px;
   text-align: center;
@@ -106,18 +113,19 @@ body {
   flex-basis: 25%;
   text-align: center;
   padding: 5px 0;
-  position: relative; /* Add this line to position the pseudo-element relative to this element */
+  position: relative;
   box-sizing: border-box;
+  color: #e8eaed; /* Off-white */
 }
 
 .permutation::before {
   content: "";
   position: absolute;
   bottom: 0;
-  left: 50%; /* Center the underline */
-  width: 80%; /* Adjust this value to control the width of the underline */
-  transform: translateX(-50%); /* Ensure the underline remains centered */
-  border-bottom: 2px solid #ccc;
+  left: 50%;
+  width: 80%;
+  transform: translateX(-50%);
+  border-bottom: 2px solid #5f6368; /* Darker gray */
 }
 
 .permutation.red {
@@ -129,14 +137,15 @@ body {
 }
 
 .add-card {
-  opacity: 0.5; /* Make the card semi-transparent */
+  opacity: 0.5;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer; /* Change the cursor to a pointer when hovering over the card */
+  cursor: pointer;
+  background-color: #2e2e2e; /* Slightly lighter gray */
 }
 
 .plus-sign {
   font-size: 48px;
-  color: #333;
+  color: #e8eaed; /* Off-white */
 }

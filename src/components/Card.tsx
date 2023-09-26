@@ -22,15 +22,21 @@ function Card({ onDelete }: CardProps) {
         setPermutations(getPermutations(value));
     };
 
-    const handleCardClick = (event: React.MouseEvent<HTMLDivElement>) => { // Specify type here
-        inputRef.current?.focus(); // Use optional chaining here
+    const handleCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    inputRef.current?.focus(); // Use optional chaining here
 
-        if (event.ctrlKey && event.type === "click") {
-            copyToClipboard();
-        } else if (event.ctrlKey && event.type === "auxclick" && onDelete) {
-            onDelete(); // Call the onDelete prop to delete the card
-        }
-    };
+    if (event.ctrlKey && event.button === 2 && onDelete) {
+        onDelete(); // Call the onDelete prop to delete the card
+        return; // Exit the function early after deleting the card
+    }
+
+    if (event.ctrlKey && event.type === "click") {
+        copyToClipboard();
+    } else if (event.ctrlKey && event.type === "auxclick") {
+        copyToClipboard();
+    }
+};
+
 
     const getPermutations = (string: string): string[] => { // Specify types here
         if (string.length === 0) return [];
@@ -55,20 +61,21 @@ function Card({ onDelete }: CardProps) {
         return [...result];
     };
 
-    const handlePermutationClick = (perm: string, event: React.MouseEvent<HTMLDivElement>) => { // Specify type here
+    const handlePermutationClick = (perm: string, event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
-    
+
         let newStatus: string = '';
-    
-        if (event.type === "click" && event.altKey) {
-            newStatus = highlightStatus[perm] === "green" ? "default" : "green";
-        } else if (event.type === "click") {
-            newStatus = highlightStatus[perm] === "red" ? "default" : "red";
-        } else if (event.type === "auxclick") {
-            setHighlightStatus({});
+
+        if (event.type === "click") { // Left click
+            newStatus = "red";
+        } else if (event.type === "auxclick") { // Middle click
+            newStatus = "green";
+        } else if (event.type === "contextmenu") { // Right click
+            event.preventDefault(); // Prevent the default context menu from showing up
+            setHighlightStatus({}); // Clear all highlights
             return;
         }
-    
+
         setHighlightStatus(prev => ({ ...prev, [perm]: newStatus }));
     };
     
@@ -114,7 +121,7 @@ function Card({ onDelete }: CardProps) {
     
 
     return (
-        <div className="card" onClick={handleCardClick} onAuxClick={handleCardClick}>            
+        <div className="card" onClick={handleCardClick} onAuxClick={handleCardClick} onContextMenu={handleCardClick}>
             <div className="input-container" data-digit-count={inputValue.length}>
                 {[...Array(4)].map((_, index) => (
                     <div key={index} className="digit-box">
@@ -139,15 +146,16 @@ function Card({ onDelete }: CardProps) {
                         key={index}
                         className={`permutation ${highlightStatus[perm] || ''}`}
                         onClick={(e) => handlePermutationClick(perm, e)}
-                        onContextMenu={(e) => handlePermutationClick(perm, e)}
                         onAuxClick={(e) => handlePermutationClick(perm, e)}
+                        onContextMenu={(e) => handlePermutationClick(perm, e)}
                     >
                         {perm}
                     </div>
                 ))}
             </div>
         </div>
-    );    
+    );
 }
+
 
 export default Card;
