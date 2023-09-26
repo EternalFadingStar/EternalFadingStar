@@ -16,7 +16,13 @@
   }
 }
 
+/* Default light theme */
 body {
+  background-color: gray;
+  color: black;
+}
+
+body.dark-mode {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
